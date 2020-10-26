@@ -201,7 +201,7 @@ Porter maintenant votre attention sur le premier patch Pulse que nous avons ajou
 
 <img src="./images/13.png" width="400"/>
 
-Retourner dans votre paneau de scène et sélectionnez votre objet null Gachapon 1 et aller dans l'inspecteur clicker sur la flèche à côté de "Position" et "Scale" afin de les importer comme patchs. Connecter un output de nos patchs Transition à l'input Position et l'autre à l'input Scale.
+Retourner dans votre panneau de scène et sélectionnez votre objet null Gachapon 1 et aller dans l'inspecteur clicker sur la flèche à côté de "Position" et "Scale" afin de les importer comme patchs. Connecter un output de nos patchs Transition à l'input Position et l'autre à l'input Scale.
 
 D'abord la position. Nous voulons que la capsule sorte de la bouche, soit animer sa profondeur, donc l'axe Z, que l'on va transitionner de -0,15 à 0,07. On peut constater que la capsule sort bien de la bouche maintenant mais sa hauteur n'est pas correcte. Pour ceci nous allons toucher à l'axe Y, en passant à la fois la valeur initiale et finale à -0,06. La capsule devrait être au niveau de la bouche maintenant.
 
@@ -257,13 +257,13 @@ Dans les options en haut de l'écran, aller dans "Project" puis "Edit Properties
 
 <img src="./images/23.png" width="400"/><img src="./images/24.png" width="400"/>
 
-Il nous faudra maintenant deux trois patch pour ces instructions afin qu'elles apparaissent à l'écran. Pour ce faire, dans l'inspecteur de scène, sélectionnez "Device". Dans le paneau d'inspecteur à droite, clicker sur le dropdown nommer "Choose an Instruction" à côté de "On Opening".
-Choisissez "See all instructions" si vous ne voyez pas "Open your Mouth". Une autre fenêtre apparaîtra dans laquelle vous pourrez chercher "Open your Mouth" le cas échéant. Sélectionner le. SparkAR devrait automatiquement créer une petite chaîne de patch pour cette instruction.
+Il nous faudra maintenant deux trois patchs pour ces instructions afin qu'elles apparaissent à l'écran. Pour ce faire, dans l'inspecteur de scène, sélectionnez "Device". Dans le panneau d'inspecteur à droite, clicker sur le dropdown nommer "Choose an Instruction" à côté de "On Opening".
+Choisissez "See all instructions" si vous ne voyez pas "Open your Mouth". Une autre fenêtre apparaîtra dans laquelle vous pourrez chercher "Open your Mouth" le cas échéant. Sélectionnez le. SparkAR devrait automatiquement créer une petite chaîne de patch pour cette instruction.
 
 <img src="./images/25.png" width="600"/>
 
-Le patch créer ressemble à ceci :
+Le patch créé ressemble à ceci :
 
 <img src="./images/26.png" width="600"/>
 
-Dorénavant, lorsque votre effet sera ouvert, cette instruction apparaître le temps de 5 secondes. Afin de l'allonger, il suffit de changer la valeur dans le second input du patch "Less Than".
+Dorénavant, lorsque votre effet sera ouvert, cette instruction apparaîtra le temps de 5 secondes. Afin de l'allonger, il suffit de changer la valeur dans le second input du patch "Less Than".
