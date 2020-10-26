@@ -5,3 +5,4 @@ Dans ce tutoriel, nous allons apprendre à créer un filtre inspiré par les mac
 <img src="https://github.com/The-AR-Company/GachaPon_Tutoriel/blob/main/images/gachaPon.png" width="500"/>
 
 Vous trouverez le tutoriel écrit en naviguant vers Tutoriel.md et avez accès à l'ensemble des fichiers utilisés dans le cadre de ce projet en le téléchargeant.
+[Vous trouverez le tutoriel écrit ici](https://the-ar-company.github.io/GachaPon_tutorial/) et [téléchargez le projet](https://github.com/The-AR-Company/GachaPon_tutorial/archive/main.zip)
