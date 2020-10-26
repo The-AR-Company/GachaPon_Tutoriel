@@ -8,10 +8,10 @@ Dans ce tutoriel, nous allons apprendre à créer un filtre inspiré par les mac
 
 Ce tutoriel couvrira les techniques suivantes :
 
-1. Rendre l'objet résultant aléatoire
-2. Animer la position, la taille et la rotation de l'object
+1. Randomiser des objets 3D
+2. Animer la position, la taille et la rotation d'objets 3D
 3. Travailler avec couches et textures
-4. Interactions faciales
+4. Implémenter des interactions faciales
 
 Pour réaliser ce projet, vous aurez besoin des assets suivants :
 
@@ -24,20 +24,20 @@ Pour réaliser ce projet, vous aurez besoin des assets suivants :
 
 ### 1ère partie - _Le début_
 
-Nous allons commencer par ouvrir un projet vide sur SparkAR. Naviguer vers le panneau des assets, fenêtre située en bas à gauche et clicker le signe "+". De là nous allons importer les objets 3D nécessaires.
+Nous allons commencer par ouvrir un projet vide sur SparkAR. Naviguez vers le panneau des assets, fenêtre située en bas à gauche et clickez le signe "+". De là nous allons importer les objets 3D nécessaires.
 
 <img src="./images/3Dassets.png" width="200"/>
 
 Nous avons donc dans notre projet les objets suivants :
 1. Le conteneur gachapon
 2. La poignée
-3. Deux parties de capsules 3D (Le bas et le haut. Nous aurions pu ici importer une seule moitié de capsule, la dupliquer et tourner la copie à 180°) 
+3. Deux parties de capsules 3D (Le bas et le haut. Nous aurions pu ici importer une seule moitié de capsule, la dupliquer et pivoter la copie de 180°) 
 4. Une capsule 3D complète
 
 Pour rester plus court, nous remplacerons les jouets par de simples formes géométriques 3D, que l'on va prendre dans la libraire d'assets de SparkAR.
 
-Retourner dans le panneau d'assets et clicker sur "Add asset", puis "Search AR Library". Une nouvelle fenêtre s'ouvrira, clicker sur "3D objects" et choisissez les primitives simples.
-Importer les objets suivants :
+Retournez dans le panneau d'assets et clickez sur "Add asset", puis "Search AR Library". Une nouvelle fenêtre s'ouvrira, clickez sur "3D objects" et choisissez les primitives simples.
+Importez les objets suivants :
 
 1. Cube
 2. Sphere
@@ -48,40 +48,40 @@ Importer les objets suivants :
 
 <img src="./images/sparkARlibrary3D.gif" width="500"/>
 
-N'oubliez pas d'importer l'occluder facial des assets de SparkAR (également trouvable dans le dossier downloads de ce projet)
+N'oubliez pas d'importer l'occluder facial des assets de SparkAR (également disponible dans le dossier downloads de ce projet)
 
 Votre panneau d'assets devrait ressembler à ceci :
 
 <img src="./images/assetPanel2.png" width="200"/>
 
-Rendez vous maintenant sur la tabulation de "Layers", en haut à gauche à côté de votre tabulation Scene et ajouter deux nouvelles couches.
-Renommer la première couche "Top layer", la deuxième "Middle layer" et la troisième "Bottom layer"
+Rendez vous maintenant sur la tabulation nommée "Layers", en haut à gauche à côté de votre tabulation Scene et ajoutez deux nouvelles couches.
+Renommez la première couche "Top layer", la deuxième "Middle layer" et la troisième "Bottom layer"
 
 <img src="./images/layers.png" width="200"/>
 
-Retourner maintenant dans l'inspecteur de scène et click droit sur "Focal Distance", ajouter un "Face Tracker". Click droit sur le face tracker et rajouter deux Face Meshes. Renommer ensuite le premier "Retouch" et le second "Face". Retouch devrait être sur la "Top layer" et Face sur la "Middle layer". Décocher aussi les checkbox "eyes" et "mouth" sur les deux.
+Retournez maintenant dans l'inspecteur de scène et click droit sur "Focal Distance", ajoutez un "Face Tracker". Click droit sur le face tracker et rajoutez deux Face Meshes. Renommez ensuite le premier "Retouch" et le second "Face". Retouch devrait être sur la "Top layer" et Face sur la "Middle layer". Décochez aussi les checkbox "eyes" et "mouth" sur les deux.
 
 <img src="./images/retouch.png" width="500"/>
 
-Maintenant créer deux matériaux pour les deux facemesh. Il suffit d'en sélectionner un, naviguer vers "Matérials" à droite et clicker sur le "+". Trouver le matériau nouvellement créer et sélectionner le à gauche afin d'en ouvrir les propriétés.
+Maintenant créez deux matériaux pour les deux facemesh. Il suffit d'en sélectionner un, naviguer vers "Matérials" à droite et clicker sur le "+". Trouvez le matériau nouvellement créé et sélectionnez le à gauche afin d'en ouvrir les propriétés.
 
 <img src="./images/rename.png" width="500"/>
 
-Renommer le "Retouch" et assigner lui le shader type "Retouching".
+Renommez le "Retouch" et assignez lui le shader type "Retouching".
 
 <img src="./images/shader.png" width="200"/>
 
-Avant de faire la même chose pour notre autre facemesh, selectionner le face tracker et, dans les options à droite, clicker le "+" à côté de "Texture Extraction". Ceci nous permettra d'avoir la texture du visage tracké en tant que texture, que l'on assignera à notre matériel pour "Face".
+Avant de faire la même chose pour notre autre facemesh, selectionnez le face tracker et, dans les options à droite, clickez le "+" à côté de "Texture Extraction". Ceci nous permettra d'avoir la texture du visage tracké en tant que texture, que l'on assignera à notre matériel pour "Face".
 
 <img src="./images/textureExtract.png" width="200"/>
 
-Créer lui donc un matériel et renommer le "Face". Cette fois-ci changer le shader type à "Flat" et, just en-dessous sous Texture, sélectionner la texture extraite.
+Créez lui donc un matériel et renommez le "Face". Cette fois-ci changez le shader type à "Flat" et, juste en-dessous sous Texture, sélectionnez la texture extraite.
 
 <img src="./images/faceMat.png" width="200"/>
 
 ### 2ème partie - _Mise en place de la machine gachapon_
 
-Naviguer dans le panneau d'assets et sélectionnez le "Head Occluder", et mettez en une instance dans le facetracker. Retourner dans le panneau, prenez le container gachapon et mettez le dans le Head Occluder, qu'il en soit "enfant". Voici à quoi cela devrait ressembler :
+Naviguez dans le panneau d'assets et sélectionnez le "Head Occluder", et mettez en une instance dans le facetracker. Retournez dans le panneau, prenez le container gachapon et mettez le dans le Head Occluder, qu'il en soit "enfant". Voici à quoi cela devrait ressembler :
 
 <img src="./images/insertGacha.png" width="500"/>
 
@@ -89,24 +89,24 @@ Redimensionner l'occluder de 1 à 1,1 en X, Y et Z
 
 <img src="./images/scaleIt.png" width="500"/>
 
-Faites de même pour le container gachapon, de 1 à 1,2 en X, Y et Z. Positionner le aussi correctement, qu'il repose naturellement sur l'occluder facial.
+Faites de même pour le container gachapon, de 1 à 1,2 en X, Y et Z. Positionnez le aussi correctement, qu'il repose naturellement sur l'occluder facial.
 
-Aller dans le matériel du Head Occluder et changer son blend mode de "Replace" à "Alpha" et réduisez son opacité de 100 à 1. L'occluder devrait maintenant être invisible.
+Allez dans le matériel du Head Occluder et changerzson blend mode de "Replace" à "Alpha" et réduisez son opacité de 100 à 1. L'occluder devrait maintenant être invisible.
 Dans le matériel du container gachapon maintenant, selon comment votre objet 3D a été créer, vous trouverez un ou plusieurs emplacements pour les matériaux. Dans notre exemple, un emplacement correspond au verre, l'autre à la structure. Créer deux matériaux (vous verrez également à ce moment quel matériel s'applique sur quelle partie). Renommez celui de la structure "outline" et choisissez une couleur. Cochez l'option Specular et mettez la valeur "smoothness" aux alentours de 60.
 
 <img src="./images/outlineMat.png" width="300"/>
 
-Avant de passer au matériel pour le verre, nous allons importer une texture d'environement. Naviguer au panneau d'assets et clicker sur "Add Asset" > "Environment Texture" et choisissez en une. Ici nous avons opté pour Skylit Garage.
+Avant de passer au matériel pour le verre, nous allons importer une texture d'environement. Naviguez au panneau d'assets et clickez sur "Add Asset" > "Environment Texture" et choisissez en une. Ici nous avons opté pour Skylit Garage.
 
 Retournez dans l'inspecteur de scène et ajouter une "Environment Light" (notabene : celle-ci ne doit pas être enfant du facetracker). Sélectionnez là et dans l'inspecteur, sous Texture, choisissez Skylit Garage.
 
 <img src="./images/envLight.png" width="500"/>
 
-Maintenant, retournez dans le matériel pour le verre et changer le shader type à "Physically Based". Fixer le paramètre "metallic" à 70, cocher l'Emission et changer la couleur pour qu'elle soit plus clair que du noir. Cocher également Environment, assurez vous que le blend mode soit bien "Alpha" que l'opacité est aux alentours des 30% et que "double-sided" est bien coché.
+Maintenant, retournez dans le matériel pour le verre et changez le shader type à "Physically Based". Fixez le paramètre "metallic" à 70, cocher l'Emission et changez la couleur pour qu'elle soit plus clair que du noir. Cochez également Environment, assurez vous que le blend mode soit bien "Alpha", que l'opacité est aux alentours des 30% et que "double-sided" est bien coché.
 
 <img src="./images/physMat.png" width="300"/>
 
-Naviger maintenant dans le paneau des assets et déposer votre capsule gachapon complète comme enfant du Head Occluder.
+Naviger maintenant dans le panneau des assets et déposer votre capsule gachapon complète comme enfant du Head Occluder.
 
 <img src="./images/01.png" width="200"/>
 
@@ -114,20 +114,20 @@ Déplacer le dans le container et dupliquer le plusieurs fois, selon le nombre d
 
 <img src="./images/02.png" width="600"/>
 
-Retournez dans le panneau d'assets et déplacer la poignée comme enfant du Face Tracker.
-Redimensionnez et positionnez là afin qu'elle soit plus ou moins au niveau du nez de l'utilisateur. Créer également un matériel pour. Nous allons en faire un matériel aux allures plus plastiques, pour lequel le shader de base "Standard" semble convenir. Nous allons cependant checker "Specular" et changer la softness à 65%. Finalement ajouter une touche de rouge au triangle sur la poignée afin que celle-ci soit plus visible.
+Retournez dans le panneau d'assets et déplacez la poignée comme enfant du Face Tracker.
+Redimensionnez et positionnez là afin qu'elle soit plus ou moins au niveau du nez de l'utilisateur. Créez également un matériel pour. Nous allons en faire un matériel aux allures plus plastiques, pour lequel le shader de base "Standard" semble convenir. Nous allons cependant checker "Specular" et changer la softness à 65%. Finalement ajoutez une touche de rouge au triangle sur la poignée afin que celle-ci soit plus visible.
 
 <img src="./images/03.png" width="600"/>
 
 Nous allons maintenant animer la poignée afin qu'elle tourne sur elle-même plusieurs fois lorsque l'utilisateur ouvre sa bouche, et donc avant que la capsule ne sorte.
 
-Pour y parvenir, sélectionner le face tracker et, dans l'inspecteur, sous "Interactions", activer le dropdown. Il y a plusieurs interactions disponibles mais nous allons nous intéresser dans notre cas à "Mouth Open". Le sélectionner devrait faire apparaître l'éditeur de patch. Vous pourrez voir dedans une chaîne qui lie notre nouvelle interaction avec le face tracker au biais de patchs. C'est ici que nous allons maintenant ajouter les patchs dont nous avons besoin pour animer nos objets. Pour ajouter un patch, naviguer en bas de l'éditeur vers l'option "Add patch" ou click droit n'importe où dans l'éditeur. Voici la liste à importer :
+Pour y parvenir, sélectionner le face tracker et, dans l'inspecteur, sous "Interactions", activer le dropdown. Il y a plusieurs interactions disponibles mais nous allons nous intéresser dans notre cas à "Mouth Open". Le sélectionner devrait faire apparaître l'éditeur de patch. Vous pourrez voir dedans une chaîne qui lie notre nouvelle interaction avec le face tracker au biais de patchs. C'est ici que nous allons maintenant ajouter les patchs dont nous avons besoin pour animer nos objets. Pour ajouter un patch, naviguez en bas de l'éditeur vers l'option "Add patch" ou click droit n'importe où dans l'éditeur. Voici la liste à importer :
 
 1. Pulse
 2. Animation (Renommer celui-ci Animation 1 en double cliquant son nom)
 3. Transition
 
-Maintenant connecter ces nouveaux patchx à ceux existants de cette manière : (inputs seront à gauche du patch, outputs à droite)
+Maintenant connectez ces nouveaux patchs à ceux existants de cette manière : (inputs seront à gauche du patch, outputs à droite)
 - Mouth Open State output > Pulse On/Off input
 - Pulse ON output  > Animation Play input
 - Pulse OFF output  > Animation Reset input
@@ -136,7 +136,7 @@ Maintenant connecter ces nouveaux patchx à ceux existants de cette manière : (
 
 <img src="./images/04.png" width="800"/>
 
-Changer maintenant les valeurs dans le patch Transition. Dans notre cas, la poignée a l'air bien orientée si l'on regarde ses axes de déplacement, inutile donc de s'en soucier. Nous allons partir sur  toutes les valeurs à 0, et ainsi nullifier tout mouvement par défaut. Nous voulons simplement pivoter la poignée sur un axe de rotation précis, ici l'axe Z, que nous fixerons à -540 dans la deuxième étape du patch. Nous pouvons aussi changer le feel de l'animation en la passant de Linear à Sinusoidal in and out par exemple.
+Changez maintenant les valeurs dans le patch Transition. Dans notre cas, la poignée a l'air bien orientée si l'on regarde ses axes de déplacement, inutile donc de s'en soucier. Nous allons partir sur toutes les valeurs fixées à 0, et ainsi nullifier tout mouvement par défaut. Nous voulons simplement pivoter la poignée sur un axe de rotation précis, ici l'axe Z, que nous fixerons à -540 dans la deuxième étape du patch. Nous pouvons aussi changer le feel de l'animation en la passant de Linear à Sinusoidal in and out par exemple.
 
 <img src="./images/05.png" width="400"/>
 
@@ -144,21 +144,21 @@ Passong pour la suite aux capsules gachapons et "jouets" qui en sortiront.
 
 ### 3ème partie - _Les capsules_
 
-Click droit sur le Face tracker et ajouter un "Null obect". Renommer celui-ci à "Gachapon 1" et dupliquer le en fonction du nombre de jouets que vous voulez comme options aléatoires. Dans ce projet nous allons en proposer 5 donc nous allons le dupliquer quatre fois. Dans chaque objet null, déposer une instance de Capsule Bottom 3D, Capsule Top 3D et un jouet. Votre scène devrait ressembler à ceci :
+Click droit sur le Face tracker et ajouter un "Null obect". Renommer celui-ci à "Gachapon 1" et dupliquez le en fonction du nombre de jouets que vous voulez comme options aléatoires. Dans ce projet nous allons en proposer 5 donc nous allons le dupliquer quatre fois. Dans chaque objet null, déposez une instance de Capsule Bottom 3D, Capsule Top 3D et un jouet. Votre scène devrait ressembler à ceci :
 
 <img src="./images/06.png" width="200"/>
 
 Commencons par rendre les couleurs des capsules qui sortent aléatoires.
 
-Pour ceci, rajouter un patch "Random" et un "Option Picker".
-En-dessous de ce dernier patch, vous trouverez l'option pour le changer de "Number" à "Color". Assigner ces couleurs en fonction de celles déjà présentes dans le container.
+Pour ceci, rajoutez un patch "Random" et un "Option Picker".
+En-dessous de ce dernier patch, vous trouverez l'option pour le changer de "Number" à "Color". Assignez ces couleurs en fonction de celles déjà présentes dans le container.
 
 <img src="./images/07.png" width="400"/>
 
 Afin d'avoir les couleurs exactes, vous pouvez copier leur code hexa (format #FFFFFF) en les récupérant sur vos matériaux déjà créés. Puisque nous n'avons actuellement que quatre couleurs, il n'y a pas besoin de changer la dernière, elle peut rester noire.
 
 Connections à faire :
-1. Vous vous souvenez du patch Animation connecter à la rotation de la poignée? Connecter l'output "Completed" de ce patch à l'input "Randomize" du patch "Random". Ceci fera en sorte qu'une fois que la poignée aura fini sa rotation, le patch Random sera activer et rendra une couleur aléatoire. Il convient ici de changer le "End Range" de ce patch à 3, puisque 0 est compté et que nous n'utilisons que 4 couleurs.
+1. Vous vous souvenez du patch Animation connecter à la rotation de la poignée? Connecter l'output "Completed" de ce patch à l'input "Randomize" du patch "Random". Ceci fera en sorte qu'une fois que la poignée aura fini sa rotation, le patch Random sera activé et rendra une couleur aléatoire. Il convient ici de changer le "End Range" de ce patch à 3, puisque 0 est compté et que nous n'utilisons que 4 couleurs.
 2. Random patch Output > Option Picker Option input
 3. Naviguer aux matériaux pour le haut et bas des capsules et clicker la flèche entourée à côté de "Texture" afin d'en créer un patch. Cocher la case "Specular" et la smoothness à 60%. Ensuite connecter l'output du Option Picker à l'input des deux patchs que l'on vient de créer.
 
@@ -189,11 +189,11 @@ Pour ceci nous allons importer 1 patch "Random", 5 patch "Round" et 5 "Equals Ex
 <img src="./images/11.png" width="600"/>
 <img src="./images/12.png" width="600"/>
 
-L'astuce ici étant que chaque fois que le Mouth Open est activé, les Gachapons 1 à 5 seront tous activés mais un seul sera visible. Pour des raisons de test, nous allons dé-connecter cette partie de la chaîne et ne laissez manuellement que Gachapon 1 visible. Ceci nous permettra de voir notre travail en temps réel avant de l'appliquer aux autres.
+L'astuce ici étant que chaque fois que le Mouth Open est activé, les Gachapons 1 à 5 seront tous activés mais un seul sera visible. Pour des raisons de test, nous allons dé-connecter cette partie de la chaîne et ne laisser manuellement que Gachapon 1 visible. Ceci nous permettra de voir notre travail en temps réel avant de l'appliquer aux autres.
 
 Hâtelons-nous à l'animation maintenant. Ce que nous voulons faire c'est animer les capsules, qu'elles sortent de l'intérieur de la bouche et s'ouvrent juste en-dehors. Il faudra dès lors que la capsule commence suffisament petite en taille que pour crédiblement sortir de la bouche. Nous allons donc animer sa taille.
 
-Importons plusieurs patchs. Prenez un patch Animation et deux patchs Transitions, puisque nous cherchons a animer à la fois la position et la taille de la capsule. Fixer la Duration du patch d'animation a 0,5 afin de la rendre plus rapide. Souvenez-vous que ceci est bien notre second patch d'animation. En ce qui concerne le premier, nous allons récupérer son output "Completed" et le connecter à l'input "Play" de notre nouveau Animation patch. (il est plus simple de renommer le second patch Animation 2). Ce faisant, l'animation de la position de la capsule ainsi que celle de sa taille ne seront activées qu'une fois l'animation de la poignée terminée.
+Importons plusieurs patchs. Prenez un patch Animation et deux patchs Transitions, puisque nous cherchons a animer à la fois la position et la taille de la capsule. Fixez la Duration du patch d'animation a 0,5 afin de la rendre plus rapide. Souvenez-vous que ceci est bien notre second patch d'animation. En ce qui concerne le premier, nous allons récupérer son output "Completed" et le connecter à l'input "Play" de notre nouveau Animation patch. (il est plus simple de renommer le second patch Animation 2). Ce faisant, l'animation de la position de la capsule ainsi que celle de sa taille ne seront activées qu'une fois l'animation de la poignée terminée.
 
 Si vous testez le projet actuellement, vous remarquerez qu'il marche une fois, mais ne disparaît pas après. Que faire si l'on veut relancer l'effet?
 
@@ -209,16 +209,16 @@ Passons maintenant au patch Transition connecté à la taille. Nous allons passe
 
 <img src="./images/14.png" width="400"/>
 
-Maintenant que la première partie de l'animation est finie, passons à la suite. Ce que nous voudrions maintenant animer est l'ouverture de la capsule, soit les deux parties la composant, afin que l'objet à l'intérieur apparaisse. Pour ceci, ajoutons encore un patch Animation ainsi que 3 patchs Transition. Ceci est donc notre 3ème patch d'Animation. Le premier patch Transition sera pour le haut de la capsule, le second pour le bas de la capsule et le troisième pour la taille du jouet. Connecter l'output "Progress" de notre nouveau patch d'animation aux trois entrées "Progress" des patchs de Transition ajoutés.
+Maintenant que la première partie de l'animation est finie, passons à la suite. Ce que nous voudrions maintenant animer est l'ouverture de la capsule, soit les deux parties la composant, afin que l'objet à l'intérieur apparaisse. Pour ceci, ajoutons encore un patch Animation ainsi que 3 patchs Transition. Ceci est donc notre 3ème patch d'Animation. Le premier patch Transition sera pour le haut de la capsule, le second pour le bas de la capsule et le troisième pour la taille du jouet. Connectez l'output "Progress" de notre nouveau patch d'animation aux trois entrées "Progress" des patchs de Transition ajoutés.
 
 Nous allons ensuite connecter l'output "Completed" du second patch d'animation à l'input Play du troisième patch animation (vous pouvez renommer ce dernier a Animation 3). De cette manière, notre nouvelle animation, l'ouverture de la capsule, jouera après l'animation de la capsule sortant de la bouche. Retournons donc sur notre premier patch Pulse et connectons le Off au Reset de notre Animation 3. N'oubliez pas de changer la valeur de sa Duration en 0,5.
 
 <img src="./images/15.png" width="400"/>
 
 Enfin nous allons vouloir animer la partie supérieure de la capsule afin que celle-ci remonte ainsi que la partie inférieure de la capsule, qu'elle s'abaisse.
-D'abord importons les patchs Position de ces deux objets et connectons l'output du patch Transition a la Position du haut de la capsule et l'autre patch Transition à la Position du bas de la capsule. Modifier seulement les valeurs finales des axes Y pour les deux. Pour le haut, 0,05 Y final et pour le bas -0,05 valeur finale.
+D'abord importons les patchs Position de ces deux objets et connectons l'output du patch Transition a la Position du haut de la capsule et l'autre patch Transition à la Position du bas de la capsule. Modifiez seulement les valeurs finales des axes Y pour les deux. Pour le haut, 0,05 Y final et pour le bas -0,05 valeur finale.
 Finalement il convient d'animer la taille des jouets une fois la capsule ouverte.
-Pour ce faire, importer le patch Scale du premier jouet, ici le cube, dans l'inspecteur. Connectez-y l'output du 3ème patch de Transition. Modifiez les valeurs de fin de sorte que la valeur finale soit supérieure à celle initiale, par example 1 à 1,3.
+Pour ce faire, importez le patch Scale du premier jouet, ici le cube, dans l'inspecteur. Connectez-y l'output du 3ème patch de Transition. Modifiez les valeurs de fin de sorte que la valeur finale soit supérieure à celle initiale, par example 1 à 1,3.
 
 <img src="./images/16.png" width="400"/>
 
